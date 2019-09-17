@@ -1,8 +1,9 @@
 {
 	"name": "@rbxts/camera-shaker",
-	"version": "1.0.1",
-	"description": "",
-	"main": "out/init.lua",
+	"version": "1.0.2",
+	"description": "roblox-ts package for Crazyman32's Roblox port of \"EZ Camera Shake\"",
+	"main": "CameraShaker/init.lua",
+	"types": "index.d.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -10,7 +11,6 @@
 	"author": "",
 	"license": "ISC",
 	"private": false,
-	"types": "out/index.d.ts",
 	"devDependencies": {
 		"@rbxts/types": "^1.0.273"
 	}
