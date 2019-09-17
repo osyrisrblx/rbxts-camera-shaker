@@ -1,0 +1,17 @@
+{
+	"name": "@rbxts/camera-shaker",
+	"version": "1.0.0",
+	"description": "",
+	"main": "out/init.lua",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"private": false,
+	"types": "out/index.d.ts",
+	"devDependencies": {
+		"@rbxts/types": "^1.0.273"
+	}
+}
