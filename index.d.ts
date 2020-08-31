@@ -22,6 +22,7 @@ interface CameraShaker {
 		posInfluence?: number,
 		rotInfluence?: number
 	): void;
+	StopSustained(fadeOutTime: number): void;
 }
 
 interface CameraShakerConstructor {
