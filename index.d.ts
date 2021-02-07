@@ -12,15 +12,15 @@ interface CameraShaker {
 		roughness: number,
 		fadeInTime?: number,
 		fadeOutTime?: number,
-		posInfluence?: number,
-		rotInfluence?: number
+		posInfluence?: Vector3,
+		rotInfluence?: Vector3
 	): void;
 	StartShake(
 		magnitude: number,
 		roughness: number,
 		fadeInTime?: number,
-		posInfluence?: number,
-		rotInfluence?: number
+		posInfluence?: Vector3,
+		rotInfluence?: Vector3
 	): void;
 	StopSustained(fadeOutTime: number): void;
 }
