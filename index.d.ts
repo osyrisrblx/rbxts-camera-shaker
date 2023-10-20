@@ -1,12 +1,51 @@
-interface CameraShakePreset {
-	(): void;
+interface CameraShakeInstance {
+	Magnitude: number;
+	Roughness: number;
+	PositionInfluence: Vector3;
+	RotationInfluence: Vector3;
+	DeleteOnInactive: boolean;
+	roughMod: number;
+	magnMod: number;
+	fadeOutDuration: number;
+	fadeInDuration: number;
+	sustain: boolean;
+	currentFadeTime: number;
+	tick: number;
+
+	UpdateShake(dt: number): Vector3;
+	StartFadeOut(fadeOutTime: number): void;
+	StartFadeIn(fadeInTime: number): void;
+	GetScaleRoughness(): number;
+	SetScaleRoughness(v: number): void;
+	GetScaleMagnitude(): number;
+	SetScaleMagnitude(v: number): void;
+	GetNormalizedFadeTime(): number;
+	IsShaking(): boolean;
+	IsFadingOut(): boolean;
+	IsFadingIn(): boolean;
+
+	/**
+	 * FadingIn = 0
+	 *
+	 * FadingOut = 1
+	 *
+	 * Sustained = 2
+	 *
+	 * Inactive = 3
+	 *
+	 */
+	GetState(): 0 | 1 | 2 | 3;
+}
+
+interface CameraShakeInstanceConstructor {
+	new (magnitude: number, roughness: number, fadeInTime: number, fadeOutTime: number): CameraShakeInstance;
 }
 
 interface CameraShaker {
 	Start(): void;
 	Stop(): void;
-	Shake(shakeInstance: CameraShakePreset): void;
-	ShakeSustain(shakeInstance: CameraShakePreset): void;
+	Shake(shakeInstance: CameraShakeInstance): void;
+	ShakeSustain(shakeInstance: CameraShakeInstance): CameraShakeInstance;
 	ShakeOnce(
 		magnitude: number,
 		roughness: number,
@@ -22,11 +61,18 @@ interface CameraShaker {
 		posInfluence?: Vector3,
 		rotInfluence?: Vector3
 	): void;
-	StopSustained(fadeOutTime: number): void;
+
+	/**
+	 * Stop all sustained shakes.
+	 * @param fadeOutTime Fadeout time (defaults to the same as fadein time if not supplied)
+	 */
+	StopSustained(fadeOutTime?: number): void;
 }
 
 interface CameraShakerConstructor {
 	new (renderPriority: Enum.RenderPriority["Value"], callbackFunction: (shakeCFrame: CFrame) => void): CameraShaker;
+
+	CameraShakeInstance: CameraShakeInstanceConstructor;
 
 	Presets: {
 		/**
@@ -34,43 +80,43 @@ interface CameraShakerConstructor {
 		 *
 		 * Should happen once.
 		 */
-		Bump: CameraShakePreset;
+		Bump: CameraShakeInstance;
 		/**
 		 * An intense and rough shake.
 		 *
 		 * Should happen once.
 		 */
-		Explosion: CameraShakePreset;
+		Explosion: CameraShakeInstance;
 		/**
 		 * A continuous, rough shake.
 		 *
 		 * Sustained.
 		 */
-		Earthquake: CameraShakePreset;
+		Earthquake: CameraShakeInstance;
 		/**
 		 * A bizarre shake with a very high magnitude and low roughness.
 		 *
 		 * Sustained.
 		 */
-		BadTrip: CameraShakePreset;
+		BadTrip: CameraShakeInstance;
 		/**
 		 * A subtle, slow shake.
 		 *
 		 * Sustained.
 		 */
-		HandheldCamera: CameraShakePreset;
+		HandheldCamera: CameraShakeInstance;
 		/**
 		 * A very rough, yet low magnitude shake.
 		 *
 		 * Sustained.
 		 */
-		Vibration: CameraShakePreset;
+		Vibration: CameraShakeInstance;
 		/**
 		 * A slightly rough, medium magnitude shake.
 		 *
 		 * Sustained.
 		 */
-		RoughDriving: CameraShakePreset;
+		RoughDriving: CameraShakeInstance;
 	};
 }
 
